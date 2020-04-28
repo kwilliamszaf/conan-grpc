@@ -57,10 +57,10 @@ class grpcConan(ConanFile):
                 raise ConanInvalidConfiguration("gRPC can only be built with Visual Studio 2015 or higher.")
 
     def source(self):
+        pass
         #tools.get(**self.conan_data["sources"][self.version])
         #extracted_dir = self.name + "-" + self.commit
-        tools.mkdir("kw")
-        os.rename("source", self._source_subfolder)
+        #os.rename("source", self._source_subfolder)
 
         #cmake_path = os.path.join(self._source_subfolder, "CMakeLists.txt")
 
