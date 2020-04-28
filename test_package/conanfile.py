@@ -12,6 +12,7 @@ class TestPackageConan(ConanFile):
         cmake.build()
 
     def test(self):
+        pass
         if not tools.cross_building(self.settings):
             bin_path = os.path.join(".", "bin", "greeter_client_server")
             self.run(bin_path, run_environment=True)
