@@ -39,7 +39,7 @@ class grpcConan(ConanFile):
         "recursive": True
      }
 
-    _source_subfolder = "source_subfolder"
+    _source_subfolder = "source/source_subfolder"
     _build_subfolder = "build_subfolder"
 
     requires = (
@@ -62,18 +62,18 @@ class grpcConan(ConanFile):
         #extracted_dir = self.name + "-" + self.commit
         #os.rename("source", self._source_subfolder)
 
-        cmake_path = os.path.join("source", self._source_subfolder, "CMakeLists.txt")
+        cmake_path = os.path.join(self._source_subfolder, "CMakeLists.txt")
 
         # See #5
-        #tools.replace_in_file(cmake_path, "_gRPC_PROTOBUF_LIBRARIES", "CONAN_LIBS_PROTOBUF")
+        tools.replace_in_file(cmake_path, "_gRPC_PROTOBUF_LIBRARIES", "CONAN_LIBS_PROTOBUF")
 
         # See https://github.com/grpc/grpc/issues/21293 - OpenSSL 1.1.1+ doesn't work without
-        #tools.replace_in_file(
-        #    cmake_path, "set(_gRPC_BASELIB_LIBRARIES wsock32 ws2_32)", "set(_gRPC_BASELIB_LIBRARIES wsock32 ws2_32 crypt32)")
+        tools.replace_in_file(
+            cmake_path, "set(_gRPC_BASELIB_LIBRARIES wsock32 ws2_32)", "set(_gRPC_BASELIB_LIBRARIES wsock32 ws2_32 crypt32)")
 
         # cmake_find_package_multi is producing a c-ares::c-ares target, grpc is looking for c-ares::cares
-        #tools.replace_in_file(
-        #    os.path.join(self._source_subfolder, "cmake", "cares.cmake"), "c-ares::cares", "c-ares::c-ares")
+        tools.replace_in_file(
+            os.path.join(self._source_subfolder, "cmake", "cares.cmake"), "c-ares::cares", "c-ares::c-ares")
 
         # Parts which should be options:
         # grpc_cronet
