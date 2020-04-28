@@ -6,6 +6,7 @@ import os
 class grpcConan(ConanFile):
     name = "grpc"
     version = "1.29.0"
+    commit = "6340359197e88540ff2bb555d4af771688f9a4bd"
     description = "Google's RPC library and framework."
     topics = ("conan", "grpc", "rpc")
     url = "https://github.com/inexorgame/conan-grpc"
@@ -48,7 +49,7 @@ class grpcConan(ConanFile):
 
     def source(self):
         tools.get(**self.conan_data["sources"][self.version])
-        extracted_dir = self.name + "-" + "1.29.x"
+        extracted_dir = self.name + "-" + self.commit
         os.rename(extracted_dir, self._source_subfolder)
 
         self.run("git submodule update --init")
