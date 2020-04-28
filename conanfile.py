@@ -66,12 +66,15 @@ class grpcConan(ConanFile):
         tools.mkdir("kw")
         cmake_path = os.path.join("source_subfolder", "CMakeLists.txt")
         cmake_path_protobuf = os.path.join("source_subfolder", "cmake/protobuf.cmake")
-        cmake_path_templates = os.path.join("source_subfolder", "templates/CMakeLists.txt.template") 
+        cmake_path_templates = os.path.join("source_subfolder", "templates/CMakeLists.txt.template")
+        cmake_path_test_package = os.path.join(self.package_folder, "test_package/CMakeLists.txt.template")
 
         # See #5
         tools.replace_in_file(cmake_path, "_gRPC_PROTOBUF_LIBRARIES", "CONAN_LIBS_PROTOBUF")
         tools.replace_in_file(cmake_path_protobuf, "_gRPC_PROTOBUF_LIBRARIES", "CONAN_LIBS_PROTOBUF")
         tools.replace_in_file(cmake_path_templates, "_gRPC_PROTOBUF_LIBRARIES", "CONAN_LIBS_PROTOBUF")
+
+_PROTOBUF_LIBPROTOBUF
 
         # See https://github.com/grpc/grpc/issues/21293 - OpenSSL 1.1.1+ doesn't work without
         #tools.replace_in_file(
@@ -115,7 +118,8 @@ class grpcConan(ConanFile):
         cmake.definitions['gRPC_BUILD_CODEGEN'] = "ON" if self.options.build_codegen else "OFF"
         cmake.definitions['gRPC_BUILD_CSHARP_EXT'] = "ON" if self.options.build_csharp_ext else "OFF"
         cmake.definitions['gRPC_BUILD_TESTS'] = "OFF"
-        cmake.definitions['gRPC_BENCHMARK_PROVIDER'] = "none"
+
+        cmake.definitions['protobuf_BUILD_TESTS'] = OFF
 
         # We need the generated cmake/ files (bc they depend on the list of targets, which is dynamic)
         cmake.definitions['gRPC_INSTALL'] = "ON"
@@ -126,6 +130,7 @@ class grpcConan(ConanFile):
         cmake.definitions['gRPC_ZLIB_PROVIDER'] = "package"
         cmake.definitions['gRPC_SSL_PROVIDER'] = "package"
         cmake.definitions['gRPC_PROTOBUF_PROVIDER'] = "package"
+        cmake.definitions['gRPC_BENCHMARK_PROVIDER'] = "none"
 
         # Compilation on minGW GCC requires to set _WIN32_WINNTT to at least 0x600
         # https://github.com/grpc/grpc/blob/109c570727c3089fef655edcdd0dd02cc5958010/include/grpc/impl/codegen/port_platform.h#L44
