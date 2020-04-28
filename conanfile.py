@@ -63,7 +63,8 @@ class grpcConan(ConanFile):
         #extracted_dir = self.name + "-" + self.commit
         #os.rename("source", self._source_subfolder)
 
-        cmake_path = os.path.join(self._source_subfolder, "CMakeLists.txt")
+        tools.mkdir("kw")
+        cmake_path = os.path.join(".", "CMakeLists.txt")
 
         # See #5
         tools.replace_in_file(cmake_path, "_gRPC_PROTOBUF_LIBRARIES", "CONAN_LIBS_PROTOBUF")
