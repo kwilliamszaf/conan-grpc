@@ -65,6 +65,7 @@ class grpcConan(ConanFile):
 
         tools.mkdir("kw")
         tools.rmdir("source_subfolder/examples")
+        tools.rmdir("source_subfolder/test_package")
         cmake_path = os.path.join("source_subfolder", "CMakeLists.txt")
         cmake_path_protobuf = os.path.join("source_subfolder", "cmake/protobuf.cmake")
         cmake_path_templates = os.path.join("source_subfolder", "templates/CMakeLists.txt.template")
