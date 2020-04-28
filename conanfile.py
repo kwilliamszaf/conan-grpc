@@ -52,8 +52,6 @@ class grpcConan(ConanFile):
         extracted_dir = self.name + "-" + self.commit
         os.rename(extracted_dir, self._source_subfolder)
 
-        self.run("git submodule update --init")
-
         cmake_path = os.path.join(self._source_subfolder, "CMakeLists.txt")
 
         # See #5
