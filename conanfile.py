@@ -17,17 +17,26 @@ class grpcConan(ConanFile):
     short_paths = True
 
     settings = "os", "arch", "compiler", "build_type"
+
     options = {
         # "shared": [True, False],
         "fPIC": [True, False],
         "build_codegen": [True, False],
         "build_csharp_ext": [True, False]
     }
+
     default_options = {
         "fPIC": True,
         "build_codegen": True,
         "build_csharp_ext": False
     }
+
+    scm = {
+        "type": "git",
+        "url": "https://github.com/grpc/grpc.git",
+        "revision": "v1.29.x"
+        "recursive": True
+     }
 
     _source_subfolder = "source_subfolder"
     _build_subfolder = "build_subfolder"
