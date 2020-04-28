@@ -115,6 +115,7 @@ class grpcConan(ConanFile):
         cmake.definitions['gRPC_BUILD_CODEGEN'] = "ON" if self.options.build_codegen else "OFF"
         cmake.definitions['gRPC_BUILD_CSHARP_EXT'] = "ON" if self.options.build_csharp_ext else "OFF"
         cmake.definitions['gRPC_BUILD_TESTS'] = "OFF"
+        cmake.definitions['gRPC_BENCHMARK_PROVIDER'] = "none"
 
         # We need the generated cmake/ files (bc they depend on the list of targets, which is dynamic)
         cmake.definitions['gRPC_INSTALL'] = "ON"
