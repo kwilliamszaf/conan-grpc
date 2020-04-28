@@ -48,7 +48,7 @@ class grpcConan(ConanFile):
 
     def source(self):
         tools.get(**self.conan_data["sources"][self.version])
-        extracted_dir = self.name + "-" + self.version
+        extracted_dir = self.name + "-" + "v1.29.0" 
         os.rename(extracted_dir, self._source_subfolder)
 
         cmake_path = os.path.join(self._source_subfolder, "CMakeLists.txt")
