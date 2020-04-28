@@ -58,8 +58,7 @@ class grpcConan(ConanFile):
                 raise ConanInvalidConfiguration("gRPC can only be built with Visual Studio 2015 or higher.")
 
     def source(self):
-        tools.chdir("source_subfolder")
-        self.run("git submodule update --init") 
+        self.run("cd source_subfolder && git submodule update --init") 
         #tools.get(**self.conan_data["sources"][self.version])
         #extracted_dir = self.name + "-" + self.commit
         #os.rename("source", self._source_subfolder)
