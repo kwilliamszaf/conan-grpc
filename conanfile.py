@@ -34,7 +34,7 @@ class grpcConan(ConanFile):
     scm = {
         "type": "git",
         "url": "https://github.com/grpc/grpc.git",
-        "revision": "v1.29.x"
+        "revision": "v1.29.x",
         "recursive": True
      }
 
