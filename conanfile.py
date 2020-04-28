@@ -130,7 +130,7 @@ class grpcConan(ConanFile):
         cmake.definitions['gRPC_CARES_PROVIDER'] = "package"
         cmake.definitions['gRPC_ZLIB_PROVIDER'] = "package"
         cmake.definitions['gRPC_SSL_PROVIDER'] = "package"
-        cmake.definitions['gRPC_PROTOBUF_PROVIDER'] = "package"
+        cmake.definitions['gRPC_PROTOBUF_PROVIDER'] = "module"
         cmake.definitions['gRPC_BENCHMARK_PROVIDER'] = "none"
 
         # Compilation on minGW GCC requires to set _WIN32_WINNTT to at least 0x600
