@@ -64,7 +64,7 @@ class grpcConan(ConanFile):
         #os.rename("source", self._source_subfolder)
 
         tools.mkdir("kw")
-        cmake_path = os.path.join(".", "CMakeLists.txt")
+        cmake_path = os.path.join("source_subfolder", "CMakeLists.txt")
 
         # See #5
         tools.replace_in_file(cmake_path, "_gRPC_PROTOBUF_LIBRARIES", "CONAN_LIBS_PROTOBUF")
