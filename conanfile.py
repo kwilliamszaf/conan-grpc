@@ -74,8 +74,6 @@ class grpcConan(ConanFile):
         tools.replace_in_file(cmake_path_protobuf, "_gRPC_PROTOBUF_LIBRARIES", "CONAN_LIBS_PROTOBUF")
         tools.replace_in_file(cmake_path_templates, "_gRPC_PROTOBUF_LIBRARIES", "CONAN_LIBS_PROTOBUF")
 
-_PROTOBUF_LIBPROTOBUF
-
         # See https://github.com/grpc/grpc/issues/21293 - OpenSSL 1.1.1+ doesn't work without
         #tools.replace_in_file(
         #    cmake_path, "set(_gRPC_BASELIB_LIBRARIES wsock32 ws2_32)", "set(_gRPC_BASELIB_LIBRARIES wsock32 ws2_32 crypt32)")
