@@ -64,14 +64,11 @@ class grpcConan(ConanFile):
         #os.rename("source", self._source_subfolder)
 
         tools.mkdir("kw")
+        tools.rmdir("source_subfolder/examples")
         cmake_path = os.path.join("source_subfolder", "CMakeLists.txt")
         cmake_path_protobuf = os.path.join("source_subfolder", "cmake/protobuf.cmake")
         cmake_path_templates = os.path.join("source_subfolder", "templates/CMakeLists.txt.template")
         #cmake_path_test_package = os.path.join(self.package_folder, "test_package/CMakeLists.txt.template")
-
-        # remove examples - can't configure them out...
-        self.run("rm source_subfolder/third_party/protobuf/cmake/examples.cmake")
-        self.run("rm source_subfolder/third_party/protobuf/cmake/tests.cmake")
 
         # See #5
         tools.replace_in_file(cmake_path, "_gRPC_PROTOBUF_LIBRARIES", "CONAN_LIBS_PROTOBUF")
