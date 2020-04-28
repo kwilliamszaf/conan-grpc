@@ -6,5 +6,5 @@ sources:
     url: https://github.com/grpc/grpc/archive/v1.26.0.zip
     sha256: b90b2328e8546065578cc7a2b354ba50461365e162d8745e539045b1ca040963
   "1.29.0":
-    url: https://github.com/inexorgame/conan-grpc/commit/bf2719c3069af555d4490cb19275a099b346b801
-    sha256: cf679cb1355088bd87ccbd5f27d49abce0288eb685c608d4b5557fc839b8e283
+    url: https://github.com/grpc/grpc/archive/v1.29.x.zip 
+    sha256: a
