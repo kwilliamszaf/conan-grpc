@@ -71,6 +71,7 @@ class grpcConan(ConanFile):
 
         # remove examples - can't configure them out...
         self.run("rm source_subfolder/third_party/protobuf/cmake/examples.cmake")
+        self.run("rm source_subfolder/third_party/protobuf/cmake/tests.cmake")
 
         # See #5
         tools.replace_in_file(cmake_path, "_gRPC_PROTOBUF_LIBRARIES", "CONAN_LIBS_PROTOBUF")
