@@ -117,6 +117,7 @@ class grpcConan(ConanFile):
         cmake.definitions['gRPC_BUILD_CSHARP_EXT'] = "ON" if self.options.build_csharp_ext else "OFF"
         cmake.definitions['gRPC_BUILD_TESTS'] = "OFF"
 
+        cmake.definitions['protobuf_BUILD_EXAMPLES'] = "OFF"
         cmake.definitions['protobuf_BUILD_TESTS'] = "OFF"
 
         # We need the generated cmake/ files (bc they depend on the list of targets, which is dynamic)
