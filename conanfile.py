@@ -39,7 +39,7 @@ class grpcConan(ConanFile):
         "recursive": True
      }
 
-    _source_subfolder = "source"
+    _source_subfolder = "source_subfolder"
     _build_subfolder = "build_subfolder"
 
     requires = (
