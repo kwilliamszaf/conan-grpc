@@ -5,7 +5,7 @@ import os
 
 class grpcConan(ConanFile):
     name = "grpc"
-    version = "1.29.x"
+    version = "1.29.0"
     description = "Google's RPC library and framework."
     topics = ("conan", "grpc", "rpc")
     url = "https://github.com/inexorgame/conan-grpc"
