@@ -6,5 +6,5 @@ sources:
     url: https://github.com/grpc/grpc/archive/v1.26.0.zip
     sha256: b90b2328e8546065578cc7a2b354ba50461365e162d8745e539045b1ca040963
   "1.29.0":
-    url: https://github.com/grpc/grpc/archive/v1.29.x.zip 
+    url: https://github.com/grpc/grpc/archive/6340359197e88540ff2bb555d4af771688f9a4bd.zip
     sha256: ce3e6266cc50cc46e1f97f84a61621ed8badaa2500143a5fd631c9c985bfbfcd
