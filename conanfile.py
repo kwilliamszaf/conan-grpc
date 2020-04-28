@@ -67,7 +67,7 @@ class grpcConan(ConanFile):
         cmake_path = os.path.join("source_subfolder", "CMakeLists.txt")
         cmake_path_protobuf = os.path.join("source_subfolder", "cmake/protobuf.cmake")
         cmake_path_templates = os.path.join("source_subfolder", "templates/CMakeLists.txt.template")
-        cmake_path_test_package = os.path.join(self.package_folder, "test_package/CMakeLists.txt.template")
+        #cmake_path_test_package = os.path.join(self.package_folder, "test_package/CMakeLists.txt.template")
 
         # See #5
         tools.replace_in_file(cmake_path, "_gRPC_PROTOBUF_LIBRARIES", "CONAN_LIBS_PROTOBUF")
