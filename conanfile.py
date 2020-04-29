@@ -45,8 +45,8 @@ class grpcConan(ConanFile):
     requires = (
         "zlib/1.2.11",
         "openssl/1.1.1d",
-        "protobuf/3.11.4@bincrafters/stable",
-        "protoc_installer/3.11.4@bincrafters/stable",
+        "protobuf/3.9.1@bincrafters/stable",
+        "protoc_installer/3.9.1@bincrafters/stable",
         "c-ares/1.15.0"
     )
 
@@ -72,9 +72,9 @@ class grpcConan(ConanFile):
         #cmake_path_test_package = os.path.join(self.package_folder, "test_package/CMakeLists.txt.template")
 
         # See #5
-        tools.replace_in_file(cmake_path, "_gRPC_PROTOBUF_LIBRARIES", "CONAN_LIBS_PROTOBUF")
-        tools.replace_in_file(cmake_path_protobuf, "_gRPC_PROTOBUF_LIBRARIES", "CONAN_LIBS_PROTOBUF")
-        tools.replace_in_file(cmake_path_templates, "_gRPC_PROTOBUF_LIBRARIES", "CONAN_LIBS_PROTOBUF")
+        #tools.replace_in_file(cmake_path, "_gRPC_PROTOBUF_LIBRARIES", "CONAN_LIBS_PROTOBUF")
+        #tools.replace_in_file(cmake_path_protobuf, "_gRPC_PROTOBUF_LIBRARIES", "CONAN_LIBS_PROTOBUF")
+        #tools.replace_in_file(cmake_path_templates, "_gRPC_PROTOBUF_LIBRARIES", "CONAN_LIBS_PROTOBUF")
 
         # See https://github.com/grpc/grpc/issues/21293 - OpenSSL 1.1.1+ doesn't work without
         #tools.replace_in_file(
@@ -130,7 +130,7 @@ class grpcConan(ConanFile):
         cmake.definitions['gRPC_CARES_PROVIDER'] = "package"
         cmake.definitions['gRPC_ZLIB_PROVIDER'] = "package"
         cmake.definitions['gRPC_SSL_PROVIDER'] = "package"
-        cmake.definitions['gRPC_PROTOBUF_PROVIDER'] = "module"
+        cmake.definitions['gRPC_PROTOBUF_PROVIDER'] = "package"
         cmake.definitions['gRPC_BENCHMARK_PROVIDER'] = "none"
 
         # Compilation on minGW GCC requires to set _WIN32_WINNTT to at least 0x600
