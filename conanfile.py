@@ -13,7 +13,7 @@ class grpcConan(ConanFile):
     homepage = "https://github.com/grpc/grpc"
     license = "Apache-2.0"
     exports_sources = ["CMakeLists.txt"]
-    generators = "cmake", "cmake_find_package_multi"
+    generators = "cmake", "cmake_find_package_multi", "virtualrunenv"
     short_paths = True
 
     settings = "os", "arch", "compiler", "build_type"
@@ -40,7 +40,6 @@ class grpcConan(ConanFile):
      }
 
     _source_subfolder = "source/source_subfolder"
-    _build_subfolder = "build_subfolder"
 
     requires = (
         "zlib/1.2.11",
@@ -139,7 +138,7 @@ class grpcConan(ConanFile):
             cmake.definitions["CMAKE_CXX_FLAGS"] = "-D_WIN32_WINNT=0x600"
             cmake.definitions["CMAKE_C_FLAGS"] = "-D_WIN32_WINNT=0x600"
 
-        cmake.configure(build_folder=self._build_subfolder)
+        cmake.configure()
         return cmake
 
     def build(self):
@@ -152,7 +151,7 @@ class grpcConan(ConanFile):
 
         self.copy(pattern="LICENSE", dst="licenses")
         self.copy('*', dst='include', src='{}/include'.format(self._source_subfolder))
-        self.copy('*.cmake', dst='lib', src='{}/lib'.format(self._build_subfolder), keep_path=True)
+        self.copy('*.cmake', dst='lib', src='{}/lib'.format(), keep_path=True)
         self.copy("*.lib", dst="lib", src="", keep_path=False)
         self.copy("*.a", dst="lib", src="", keep_path=False)
         self.copy("*", dst="bin", src="bin")
