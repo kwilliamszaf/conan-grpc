@@ -13,11 +13,13 @@ class grpcConan(ConanFile):
     homepage = "https://github.com/grpc/grpc"
     license = "Apache-2.0"
     exports_sources = ["CMakeLists.txt"]
-    generators = "cmake", "cmake_find_package_multi", "virtualrunenv"
+    generators = "cmake"
     short_paths = True
 
     settings = "os", "arch", "compiler", "build_type"
 
+    _cmake = None
+	
     options = {
         # "shared": [True, False],
         "fPIC": [True, False],
@@ -28,7 +30,7 @@ class grpcConan(ConanFile):
     default_options = {
         "fPIC": True,
         "build_codegen": True,
-        "build_csharp_ext": False
+        "build_csharp_ext": True
     }
 
     scm = {
@@ -43,7 +45,7 @@ class grpcConan(ConanFile):
 
     requires = (
         "zlib/1.2.11",
-        "openssl/1.1.1d",
+        #"openssl/1.1.1d",
         "protobuf/3.9.1@bincrafters/stable",
         "protoc_installer/3.9.1@bincrafters/stable",
         "c-ares/1.15.0"
@@ -52,94 +54,56 @@ class grpcConan(ConanFile):
     def configure(self):
         if self.settings.os == "Windows" and self.settings.compiler == "Visual Studio":
             del self.options.fPIC
+			
             compiler_version = tools.Version(self.settings.compiler.version)
+			
             if compiler_version < 14:
                 raise ConanInvalidConfiguration("gRPC can only be built with Visual Studio 2015 or higher.")
-
+				
+        self.options["protobuf"].shared = True
+				
     def source(self):
         self.run("cd source_subfolder && git submodule update --init") 
         #tools.get(**self.conan_data["sources"][self.version])
         #extracted_dir = self.name + "-" + self.commit
         #os.rename("source", self._source_subfolder)
 
-        tools.mkdir("kw")
-        tools.rmdir("source_subfolder/examples")
-        tools.rmdir("source_subfolder/test_package")
-        cmake_path = os.path.join("source_subfolder", "CMakeLists.txt")
-        cmake_path_protobuf = os.path.join("source_subfolder", "cmake/protobuf.cmake")
-        cmake_path_templates = os.path.join("source_subfolder", "templates/CMakeLists.txt.template")
-        #cmake_path_test_package = os.path.join(self.package_folder, "test_package/CMakeLists.txt.template")
-
-        # See #5
-        #tools.replace_in_file(cmake_path, "_gRPC_PROTOBUF_LIBRARIES", "CONAN_LIBS_PROTOBUF")
-        #tools.replace_in_file(cmake_path_protobuf, "_gRPC_PROTOBUF_LIBRARIES", "CONAN_LIBS_PROTOBUF")
-        #tools.replace_in_file(cmake_path_templates, "_gRPC_PROTOBUF_LIBRARIES", "CONAN_LIBS_PROTOBUF")
-
-        # See https://github.com/grpc/grpc/issues/21293 - OpenSSL 1.1.1+ doesn't work without
-        #tools.replace_in_file(
-        #    cmake_path, "set(_gRPC_BASELIB_LIBRARIES wsock32 ws2_32)", "set(_gRPC_BASELIB_LIBRARIES wsock32 ws2_32 crypt32)")
-
-        # cmake_find_package_multi is producing a c-ares::c-ares target, grpc is looking for c-ares::cares
-        #tools.replace_in_file(
-        #    os.path.join(self._source_subfolder, "cmake", "cares.cmake"), "c-ares::cares", "c-ares::c-ares")
-
-        # Parts which should be options:
-        # grpc_cronet
-        # grpc++_cronet
-        # grpc_unsecure (?)
-        # grpc++_unsecure (?)
-        # grpc++_reflection
-        # gen_hpack_tables (?)
-        # gen_legal_metadata_characters (?)
-        # grpc_csharp_plugin
-        # grpc_node_plugin
-        # grpc_objective_c_plugin
-        # grpc_php_plugin
-        # grpc_python_plugin
-        # grpc_ruby_plugin
+        #tools.rmdir("source_subfolder/examples")
+        #tools.rmdir("source_subfolder/test_package")
 
     def _configure_cmake(self):
-        cmake = CMake(self)
+        if self._cmake:
+            return self._cmake
 
-        # This doesn't work yet as one would expect, because the install target builds everything
-        # and we need the install target because of the generated CMake files
-        #
-        #   enable_mobile=False # Enables iOS and Android support
-        #   non_cpp_plugins=False # Enables plugins such as --java-out and --py-out (if False, only --cpp-out is possible)
-        #
-        # cmake.definitions['CONAN_ADDITIONAL_PLUGINS'] = "ON" if self.options.build_csharp_ext else "OFF"
-        #
-        # Doesn't work yet for the same reason as above
-        #
-        # cmake.definitions['CONAN_ENABLE_MOBILE'] = "ON" if self.options.build_csharp_ext else "OFF"
+        self._cmake = CMake(self)
+    
+        #self._cmake.definitions['gRPC_BUILD_CODEGEN'] = "ON" if self.options.build_codegen else "OFF"
+        #self._cmake.definitions['gRPC_BUILD_CSHARP_EXT'] = "ON" if self.options.build_csharp_ext else "OFF"
+        #self._cmake.definitions['gRPC_BUILD_TESTS'] = "OFF"
 
-
-        cmake.definitions['gRPC_BUILD_CODEGEN'] = "ON" if self.options.build_codegen else "OFF"
-        cmake.definitions['gRPC_BUILD_CSHARP_EXT'] = "ON" if self.options.build_csharp_ext else "OFF"
-        cmake.definitions['gRPC_BUILD_TESTS'] = "OFF"
-
-        cmake.definitions['protobuf_BUILD_EXAMPLES'] = "OFF"
-        cmake.definitions['protobuf_BUILD_TESTS'] = "OFF"
+        #self._cmake.definitions['protobuf_BUILD_EXAMPLES'] = "OFF"
+        #self._cmake.definitions['protobuf_BUILD_TESTS'] = "OFF"
 
         # We need the generated cmake/ files (bc they depend on the list of targets, which is dynamic)
-        cmake.definitions['gRPC_INSTALL'] = "ON"
+        #self._cmake.definitions['gRPC_INSTALL'] = "ON"
         # cmake.definitions['CMAKE_INSTALL_PREFIX'] = self._build_subfolder
 
         # tell grpc to use the find_package versions
-        cmake.definitions['gRPC_CARES_PROVIDER'] = "package"
-        cmake.definitions['gRPC_ZLIB_PROVIDER'] = "package"
-        cmake.definitions['gRPC_SSL_PROVIDER'] = "package"
-        cmake.definitions['gRPC_PROTOBUF_PROVIDER'] = "package"
-        cmake.definitions['gRPC_BENCHMARK_PROVIDER'] = "none"
+        #self._cmake.definitions['gRPC_CARES_PROVIDER'] = "module"
+        #self._cmake.definitions['gRPC_ZLIB_PROVIDER'] = "module"
+        #self._cmake.definitions['gRPC_SSL_PROVIDER'] = "module"
+        self._cmake.definitions['gRPC_PROTOBUF_PROVIDER'] = "package"
+        #self._cmake.definitions['gRPC_BENCHMARK_PROVIDER'] = "none"
 
         # Compilation on minGW GCC requires to set _WIN32_WINNTT to at least 0x600
         # https://github.com/grpc/grpc/blob/109c570727c3089fef655edcdd0dd02cc5958010/include/grpc/impl/codegen/port_platform.h#L44
-        if self.settings.os == "Windows" and self.settings.compiler == "gcc":
-            cmake.definitions["CMAKE_CXX_FLAGS"] = "-D_WIN32_WINNT=0x600"
-            cmake.definitions["CMAKE_C_FLAGS"] = "-D_WIN32_WINNT=0x600"
+        #if self.settings.os == "Windows" and self.settings.compiler == "gcc":
+        #    self._cmake.definitions["CMAKE_CXX_FLAGS"] = "-D_WIN32_WINNT=0x600"
+        #    self._cmake.definitions["CMAKE_C_FLAGS"] = "-D_WIN32_WINNT=0x600"
 
-        cmake.configure()
-        return cmake
+        # cmake = CMake(self, toolset = f"{self.settings.compiler.toolset},host=x64")
+        #self._cmake.configure(build_folder=self._build_subfolder)
+        return self._cmake
 
     def build(self):
         cmake = self._configure_cmake()
@@ -174,5 +138,6 @@ class grpcConan(ConanFile):
             "address_sorting",
             "upb",
         ]
+
         if self.settings.compiler == "Visual Studio":
             self.cpp_info.system_libs += ["wsock32", "ws2_32"]
