@@ -114,7 +114,8 @@ class grpcConan(ConanFile):
 	    self.run("mkdir " + _build_subfolder)
         self.run("cd " + _build_subfolder)
         self.run("cmake build .. -DCMAKE_BUILD_TYPE=Release -DgRPC_PROTOBUF_PROVIDER=package")
-		self.run("ninja")
+		self.run("activate_run.bat")
+        self.run("ninja")
 
     def package(self):
         cmake = self._configure_cmake()
