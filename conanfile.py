@@ -110,9 +110,7 @@ class grpcConan(ConanFile):
         return self._cmake
 
     def build(self):
-        self.run("cmake build . -GNinja -DCMAKE_BUILD_TYPE=Release -DgRPC_PROTOBUF_PROVIDER=package")
-        self.run("activate_run.bat")
-        self.run("ninja")
+        self.run("cmake build . -GNinja -DCMAKE_BUILD_TYPE=Release -DgRPC_PROTOBUF_PROVIDER=package && activate_run.bat && ninja")
 
     def package(self):
         cmake = self._configure_cmake()
