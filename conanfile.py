@@ -13,7 +13,7 @@ class grpcConan(ConanFile):
     homepage = "https://github.com/grpc/grpc"
     license = "Apache-2.0"
     exports_sources = ["CMakeLists.txt"]
-    generators = "cmake"
+    generators = "cmake", "virtualrunenv"
     short_paths = True
 
     settings = "os", "arch", "compiler", "build_type"
@@ -43,6 +43,10 @@ class grpcConan(ConanFile):
 
     _source_subfolder = "source/source_subfolder"
 
+    build_requires = (
+	    "protoc_installer/3.9.1@bincrafters/stable"
+	)
+    
     requires = (
         "zlib/1.2.11",
         #"openssl/1.1.1d",
