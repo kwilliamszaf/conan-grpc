@@ -41,8 +41,8 @@ class grpcConan(ConanFile):
         "recursive": True
      }
 
-    _source_subfolder = "source/source_subfolder"
-    _build_subfolder  = "source/build_subfolder"
+    _source_subfolder = "source_subfolder"
+    _build_subfolder  = "build_subfolder"
 
     build_requires = (
 	    "protoc_installer/3.9.1@bincrafters/stable"
@@ -111,7 +111,7 @@ class grpcConan(ConanFile):
         return self._cmake
 
     def build(self):
-        self.run("mkdir " + self._build_subfolder)
+        self.run("mkdir -p " + self._build_subfolder)
         self.run("cd " + self._build_subfolder)
         self.run("cmake build .. -DCMAKE_BUILD_TYPE=Release -DgRPC_PROTOBUF_PROVIDER=package")
         self.run("activate_run.bat")
