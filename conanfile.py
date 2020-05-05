@@ -42,7 +42,6 @@ class grpcConan(ConanFile):
      }
 
     _source_subfolder = "source_subfolder"
-    _build_subfolder  = "build_subfolder"
 
     build_requires = (
 	    "protoc_installer/3.9.1@bincrafters/stable"
@@ -111,8 +110,7 @@ class grpcConan(ConanFile):
         return self._cmake
 
     def build(self):
-        self.run("mkdir -p " + self._build_subfolder)
-        self.run("cd " + self._build_subfolder)
+        self.run("cd build")
         self.run("cmake build .. -DCMAKE_BUILD_TYPE=Release -DgRPC_PROTOBUF_PROVIDER=package")
         self.run("activate_run.bat")
         self.run("ninja")
