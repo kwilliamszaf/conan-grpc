@@ -1,5 +1,6 @@
 from conans import ConanFile, CMake, tools
 from conans.errors import ConanInvalidConfiguration
+from conans.tools import Version
 import os
 
 
@@ -49,10 +50,11 @@ class grpcConan(ConanFile):
     
     requires = (
         "zlib/1.2.11",
-        #"openssl/1.1.1d",
+        #"openssl/1.1.1e",
         "protobuf/3.9.1@bincrafters/stable",
         "protoc_installer/3.9.1@bincrafters/stable",
-        "c-ares/1.15.0"
+        "c-ares/1.15.0",
+        "abseil/20200205"
     )
 
     def configure(self):
