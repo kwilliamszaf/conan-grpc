@@ -114,8 +114,8 @@ class grpcConan(ConanFile):
         self.run("cmake . -GNinja -DCMAKE_BUILD_TYPE=Release -DgRPC_PROTOBUF_PROVIDER=package && activate_run.bat && ninja")
 
     def package(self):
-        cmake = self._configure_cmake()
-        cmake.install()
+        # cmake = self._configure_cmake()
+        # cmake.install()
 
         self.copy(pattern="LICENSE", dst="licenses")
         self.copy('*', dst='include', src='{}/include'.format(self._source_subfolder))
