@@ -119,7 +119,7 @@ class grpcConan(ConanFile):
 
         self.copy(pattern="LICENSE", dst="licenses")
         self.copy('*', dst='include', src='{}/include'.format(self._source_subfolder))
-        self.copy('*.cmake', dst='lib', src='{}/lib'.format(), keep_path=True)
+        #self.copy('*.cmake', dst='lib', src='{}/lib'.format(), keep_path=True)
         self.copy("*.lib", dst="lib", src="", keep_path=False)
         self.copy("*.a", dst="lib", src="", keep_path=False)
         self.copy("*", dst="bin", src="bin")
