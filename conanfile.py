@@ -115,7 +115,7 @@ class grpcConan(ConanFile):
         if self.settings.os == "Windows":
             self.run("activate_run.bat && cmake build . -DCMAKE_BUILD_TYPE=Release -DgRPC_PROTOBUF_PROVIDER=package")
         else:
-            self.run(". ./activate_run.sh && cmake build . -DCMAKE_BUILD_TYPE=Release -DgRPC_PROTOBUF_PROVIDER=package")
+            self.run(". ./activate_run.sh && cmake . -DCMAKE_BUILD_TYPE=Release -DgRPC_PROTOBUF_PROVIDER=package && make -j4")
 
     def package(self):
         # cmake = self._configure_cmake()
