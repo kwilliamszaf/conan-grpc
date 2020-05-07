@@ -45,7 +45,7 @@ class grpcConan(ConanFile):
     _source_subfolder = "source_subfolder"
 
     build_requires = (
-            "ninja/1.9.0",
+            #"ninja/1.9.0",
 	    "protoc_installer/3.9.1@bincrafters/stable"
 	)
     
