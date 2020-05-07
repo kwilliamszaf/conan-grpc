@@ -54,8 +54,8 @@ class grpcConan(ConanFile):
         #"openssl/1.1.1e",
         "protobuf/3.9.1@bincrafters/stable",
         "protoc_installer/3.9.1@bincrafters/stable",
-        "c-ares/1.15.0",
-        "abseil/20200205"
+        "c-ares/1.15.0"
+        #"abseil/20200205"
     )
 
     def configure(self):
