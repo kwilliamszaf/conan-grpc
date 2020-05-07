@@ -45,6 +45,7 @@ class grpcConan(ConanFile):
     _source_subfolder = "source_subfolder"
 
     build_requires = (
+            "ninja/1.9.0",
 	    "protoc_installer/3.9.1@bincrafters/stable"
 	)
     
@@ -113,9 +114,9 @@ class grpcConan(ConanFile):
 
     def build(self):
         if self.settings.os == "Windows":
-            self.run("activate_run.bat && cmake build . -DCMAKE_BUILD_TYPE=Release -DgRPC_PROTOBUF_PROVIDER=package -DgRPC_ABSL_PROVIDER=package")
+            self.run("activate_run.bat && cmake -GNinja . -DgRPC_ABSL_PROVIDER=package -DgRPC_PROTOBUF_PROVIDER=package && ninja")
         else:
-            self.run(". ./activate_run.sh && cmake . -DCMAKE_BUILD_TYPE=Release -DgRPC_PROTOBUF_PROVIDER=package -DgRPC_ABSL_PROVIDER=package && make -j4")
+            self.run(". ./activate_run.sh && cmake -GNinja . -DgRPC_ABSL_PROVIDER=package -DgRPC_PROTOBUF_PROVIDER=package && ninja")
 
     def package(self):
         # cmake = self._configure_cmake()
