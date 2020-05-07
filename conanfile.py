@@ -116,7 +116,7 @@ class grpcConan(ConanFile):
         if self.settings.os == "Windows":
             self.run("activate_run.bat && cmake -GNinja . -DgRPC_ABSL_PROVIDER=package -DgRPC_PROTOBUF_PROVIDER=package && ninja")
         else:
-            self.run(". ./activate_run.sh && cmake -GNinja . -DgRPC_ABSL_PROVIDER=package -DgRPC_PROTOBUF_PROVIDER=package && ninja")
+            self.run(". ./activate_run.sh && cmake -GNinja . -DgRPC_ABSL_PROVIDER=module -DgRPC_PROTOBUF_PROVIDER=package && ninja")
 
     def package(self):
         # cmake = self._configure_cmake()
